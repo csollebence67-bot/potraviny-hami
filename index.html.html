@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Potraviny Hami — Élelmiszerüzlet, Nyárasd / Topoľníky</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#24463A;
+    --forest-dark:#173028;
+    --wheat:#F3E9D2;
+    --paper:#FFFDF7;
+    --tomato:#C1442E;
+    --marigold:#E8A93D;
+    --charcoal:#2B2A25;
+    --charcoal-soft:#5B564A;
+    --line:#DDD0AE;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--wheat);
+    color:var(--charcoal);
+    font-family:'Work Sans',sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Baloo 2',sans-serif;
+    color:var(--forest-dark);
+    margin:0;
+  }
+  .mono{
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.02em;
+  }
+  a{color:inherit;}
+  .wrap{
+    max-width:1080px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    background:var(--forest-dark);
+    color:var(--paper);
+    font-size:14px;
+  }
+  .topbar .wrap{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    padding:10px 24px;
+    flex-wrap:wrap;
+  }
+  .topbar-info{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .topbar-info a{
+    text-decoration:none;
+    color:var(--paper);
+    opacity:0.92;
+  }
+  .topbar-info a:hover{opacity:1; text-decoration:underline;}
+  .langswitch{
+    display:flex;
+    gap:6px;
+    background:rgba(255,255,255,0.08);
+    padding:4px;
+    border-radius:999px;
+  }
+  .langswitch button{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    font-weight:600;
+    border:none;
+    background:transparent;
+    color:var(--paper);
+    opacity:0.65;
+    padding:6px 12px;
+    border-radius:999px;
+    cursor:pointer;
+    letter-spacing:0.04em;
+  }
+  .langswitch button.active{
+    background:var(--marigold);
+    color:var(--forest-dark);
+    opacity:1;
+  }
+  .langswitch button:focus-visible, a:focus-visible, .tab:focus-visible, .btn:focus-visible{
+    outline:3px solid var(--tomato);
+    outline-offset:2px;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:var(--forest);
+    color:var(--paper);
+    padding:56px 0 64px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    position:relative;
+    z-index:2;
+  }
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.25);
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:13px;
+    margin-bottom:18px;
+  }
+  .status-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--marigold);
+  }
+  .hero h1{
+    color:var(--paper);
+    font-size:clamp(40px,7vw,68px);
+    line-height:1.02;
+    font-weight:800;
+    margin-bottom:14px;
+  }
+  .hero .sub{
+    font-size:18px;
+    max-width:520px;
+    color:#E3E9E1;
+    margin-bottom:26px;
+  }
+  .rating-row{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:30px;
+    flex-wrap:wrap;
+  }
+  .stars{
+    color:var(--marigold);
+    font-size:20px;
+    letter-spacing:2px;
+  }
+  .rating-num{
+    font-family:'Baloo 2',sans-serif;
+    font-weight:700;
+    font-size:22px;
+  }
+  .rating-count{
+    font-size:14px;
+    color:#C9D2C5;
+  }
+  .hero-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Work Sans',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    padding:13px 24px;
+    border-radius:10px;
+    text-decoration:none;
+    border:2px solid transparent;
+    cursor:pointer;
+  }
+  .btn-primary{
+    background:var(--marigold);
+    color:var(--forest-dark);
+  }
+  .btn-primary:hover{background:#f0b859;}
+  .btn-ghost{
+    background:transparent;
+    color:var(--paper);
+    border-color:rgba(255,255,255,0.4);
+  }
+  .btn-ghost:hover{border-color:var(--paper);}
+
+  .hero-crates{
+    position:absolute;
+    right:-40px;
+    bottom:-30px;
+    opacity:0.18;
+    z-index:1;
+  }
+
+  /* ---------- TAG CHIPS (signature: shelf price-tag) ---------- */
+  .tags-section{
+    padding:38px 0 10px;
+  }
+  .tag-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:16px;
+    margin-top:-52px;
+    position:relative;
+    z-index:3;
+  }
+  .tag{
+    background:var(--paper);
+    border:1.5px solid var(--charcoal);
+    border-radius:6px;
+    padding:12px 18px 12px 26px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-weight:600;
+    font-size:14.5px;
+    box-shadow:3px 4px 0 rgba(36,70,58,0.18);
+    position:relative;
+  }
+  .tag::before{
+    content:"";
+    position:absolute;
+    left:10px;
+    top:50%;
+    transform:translateY(-50%);
+    width:7px;height:7px;
+    border-radius:50%;
+    background:var(--wheat);
+    border:1.5px solid var(--charcoal);
+  }
+  .tag .tag-icon{font-size:18px;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{
+    padding:70px 0;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    text-transform:uppercase;
+    font-size:12.5px;
+    letter-spacing:0.12em;
+    color:var(--tomato);
+    font-weight:600;
+    margin-bottom:10px;
+  }
+  h2.section-title{
+    font-size:clamp(28px,4vw,38px);
+    font-weight:700;
+    margin-bottom:22px;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{
+    background:var(--paper);
+    border-top:3px solid var(--charcoal);
+    border-bottom:3px solid var(--charcoal);
+  }
+  .about-single{
+    max-width:680px;
+  }
+  .about p{
+    font-size:16.5px;
+    color:var(--charcoal-soft);
+    margin-bottom:14px;
+  }
+
+  /* ---------- FEATURES ---------- */
+  .features-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  .feature-card{
+    background:var(--paper);
+    border:1.5px solid var(--charcoal);
+    border-radius:10px;
+    padding:26px 22px;
+    box-shadow:4px 5px 0 rgba(36,70,58,0.15);
+  }
+  .feature-card .ficon{
+    font-size:28px;
+    margin-bottom:12px;
+    display:block;
+  }
+  .feature-card h3{
+    font-size:19px;
+    margin-bottom:8px;
+  }
+  .feature-card p{
+    color:var(--charcoal-soft);
+    font-size:14.5px;
+    margin:0;
+  }
+  @media (max-width:800px){
+    .features-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:520px){
+    .features-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- HOURS ---------- */
+  .hours-section{
+    background:var(--forest);
+    color:var(--paper);
+  }
+  .hours-wrap{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    align-items:start;
+  }
+  .hours-section .eyebrow{color:var(--marigold);}
+  .hours-section h2{color:var(--paper);}
+  .hours-note{
+    color:#D9E1D6;
+    font-size:15.5px;
+    margin-bottom:20px;
+  }
+  .hours-card{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:10px;
+    padding:24px;
+  }
+  .hours-card .known{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px dashed rgba(255,255,255,0.25);
+    font-size:15px;
+  }
+  .hours-card .known:last-child{border-bottom:none;}
+  .hours-card .day{font-weight:600;}
+  .hours-card .val.open{color:var(--marigold); font-weight:600;}
+  .callout-box{
+    margin-top:18px;
+    background:var(--marigold);
+    color:var(--forest-dark);
+    border-radius:10px;
+    padding:16px 18px;
+    font-size:14.5px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  @media (max-width:800px){
+    .hours-wrap{grid-template-columns:1fr;}
+  }
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{
+    background:var(--wheat);
+  }
+  .reviews-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+  }
+  .review-note{
+    background:var(--paper);
+    border-radius:4px;
+    padding:24px 22px;
+    position:relative;
+    box-shadow:0 3px 10px rgba(43,42,37,0.08);
+    transform:rotate(var(--r,0deg));
+  }
+  .review-note:nth-child(1){--r:-1.2deg;}
+  .review-note:nth-child(2){--r:0.8deg;}
+  .review-note:nth-child(3){--r:-0.4deg;}
+  .review-note .tape{
+    position:absolute;
+    top:-10px;
+    left:50%;
+    transform:translateX(-50%) rotate(-2deg);
+    width:70px;
+    height:22px;
+    background:rgba(232,169,61,0.55);
+    border:1px solid rgba(232,169,61,0.8);
+  }
+  .review-stars{
+    color:var(--marigold);
+    font-size:15px;
+    margin-bottom:10px;
+  }
+  .review-note p{
+    font-size:15px;
+    color:var(--charcoal);
+    margin-bottom:16px;
+    min-height:70px;
+  }
+  .review-author{
+    font-weight:700;
+    font-size:14.5px;
+    color:var(--forest-dark);
+  }
+  .review-meta{
+    font-size:12.5px;
+    color:var(--charcoal-soft);
+    margin-top:2px;
+  }
+  .owner-reply{
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+    font-size:13px;
+    color:var(--charcoal-soft);
+    font-style:italic;
+  }
+  .reviews-source{
+    text-align:center;
+    font-size:13px;
+    color:var(--charcoal-soft);
+    margin-top:30px;
+  }
+  @media (max-width:800px){
+    .reviews-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- CONTACT / MAP ---------- */
+  .contact{
+    background:var(--paper);
+    border-top:3px solid var(--charcoal);
+  }
+  .contact-grid{
+    display:grid;
+    grid-template-columns:0.85fr 1.15fr;
+    gap:40px;
+  }
+  .contact-card{
+    background:var(--wheat);
+    border:1.5px solid var(--charcoal);
+    border-radius:10px;
+    padding:28px;
+  }
+  .contact-row{
+    display:flex;
+    gap:14px;
+    margin-bottom:18px;
+    align-items:flex-start;
+  }
+  .contact-row .cicon{font-size:20px; margin-top:2px;}
+  .contact-row strong{display:block; font-size:14px; margin-bottom:2px;}
+  .contact-row span, .contact-row a{
+    color:var(--charcoal-soft);
+    font-size:14.5px;
+    text-decoration:none;
+  }
+  .contact-row a:hover{color:var(--tomato); text-decoration:underline;}
+  .map-frame{
+    width:100%;
+    height:100%;
+    min-height:320px;
+    border:1.5px solid var(--charcoal);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .map-frame iframe{
+    width:100%;
+    height:100%;
+    min-height:320px;
+    border:0;
+    display:block;
+  }
+  @media (max-width:800px){
+    .contact-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    background:var(--forest-dark);
+    color:#B9C4B5;
+    padding:36px 0;
+    font-size:13.5px;
+  }
+  footer .wrap{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:12px;
+    align-items:center;
+  }
+  footer strong{color:var(--paper);}
+
+  [data-i18n]{}
+</style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="wrap">
+      <div class="topbar-info">
+        <a href="tel:+421315582750">📞 031 558 27 50</a>
+        <a href="#contact" data-i18n="top.address">Hlavná 107, 930 11 Topoľníky</a>
+      </div>
+      <div class="langswitch" role="group" aria-label="Nyelv / Jazyk / Language">
+        <button type="button" data-lang="hu" class="active">HU</button>
+        <button type="button" data-lang="sk">SK</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap">
+      <div class="status-pill">
+        <span class="status-dot"></span>
+        <span data-i18n="hero.status">Nyitás hétfőnként 5:30-tól</span>
+      </div>
+      <h1>Potraviny Hami</h1>
+      <p class="sub" data-i18n="hero.sub">Kis üzlet, nagy választék — gluténmentes, laktózmentes és mindenmentes termékek Nyárasd szívében.</p>
+      <div class="rating-row">
+        <span class="stars">★★★★☆</span>
+        <span class="rating-num">4,5</span>
+        <span class="rating-count mono" data-i18n="hero.reviewcount">89 Google-vélemény alapján</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://www.google.com/maps/dir/?api=1&destination=Hlavn%C3%A1+107,+930+11+Topo%C4%BEn%C3%ADky" target="_blank" rel="noopener">
+          🧭 <span data-i18n="hero.cta1">Útvonalterv</span>
+        </a>
+        <a class="btn btn-ghost" href="tel:+421315582750">
+          📞 <span data-i18n="hero.cta2">Hívás most</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAG CHIPS -->
+  <div class="tags-section">
+    <div class="wrap">
+      <div class="tag-row">
+        <div class="tag"><span class="tag-icon">👩‍🌾</span><span data-i18n="tag.women">Női tulajdonban</span></div>
+        <div class="tag"><span data-i18n="tag.lgbt">LGBTQ+-barát</span></div>
+        <div class="tag"><span class="tag-icon">🌾</span><span data-i18n="tag.gf">Gluténmentes termékek</span></div>
+        <div class="tag"><span class="tag-icon">🥛</span><span data-i18n="tag.lf">Laktózmentes termékek</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <div class="about-single">
+        <div class="eyebrow" data-i18n="about.eyebrow">Rólunk</div>
+        <h2 class="section-title" data-i18n="about.title">A hami nyami itt kezdődik</h2>
+        <p data-i18n="about.p1">A Potraviny Hami egy családias, női tulajdonban lévő élelmiszerüzlet Nyárasd (Topoľníky) központjában. Bár a bolt mérete kicsi, a választéka annál nagyobb: több évtizede szolgáljuk ki a helyieket és a betérő vásárlókat egyaránt.</p>
+        <p data-i18n="about.p2">Különösen büszkék vagyunk a gluténmentes, laktózmentes és egyéb speciális étrendhez való termékek széles, elérhető áron kínált kínálatára — vásárlóink szerint ezért érdemes idejönni, még akkor is, ha messzebb laknak.</p>
+        <p data-i18n="about.p3">Az eladóink kedvessége és segítőkészsége visszatérő téma a véleményekben: nálunk mindenki megtalálja, amire szüksége van, barátságos kiszolgálás mellett.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="feat.eyebrow">Miért minket válasszon</div>
+      <h2 class="section-title" data-i18n="feat.title">Kis hely, sok minden</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <span class="ficon">🌾</span>
+          <h3 data-i18n="feat.c1.title">Speciális étrend, széles választék</h3>
+          <p data-i18n="feat.c1.text">Gluténmentes, laktózmentes és egyéb mindenmentes termékek elérhető áron — sokan emiatt választanak minket.</p>
+        </div>
+        <div class="feature-card">
+          <span class="ficon">💶</span>
+          <h3 data-i18n="feat.c2.title">Elérhető árak</h3>
+          <p data-i18n="feat.c2.text">A speciális termékek gyakran drágák — nálunk igyekszünk ezt méltányos árazással kompenzálni.</p>
+        </div>
+        <div class="feature-card">
+          <span class="ficon">🙋‍♀️</span>
+          <h3 data-i18n="feat.c3.title">Kedves, segítőkész kiszolgálás</h3>
+          <p data-i18n="feat.c3.text">Vásárlóink újra és újra kiemelik, hogy az eladók barátságosak és mindenben segítenek.</p>
+        </div>
+        <div class="feature-card">
+          <span class="ficon">📦</span>
+          <h3 data-i18n="feat.c4.title">Nagy kínálat kis alapterületen</h3>
+          <p data-i18n="feat.c4.text">Meglepően sokféle termék fér el nálunk — érdemes körülnézni, mielőtt máshova mennénk.</p>
+        </div>
+        <div class="feature-card">
+          <h3 data-i18n="feat.c5.title">Nyitott, befogadó légkör</h3>
+          <p data-i18n="feat.c5.text">Üzletünk LGBTQ+-barátként van megjelölve, és női tulajdonban működik.</p>
+        </div>
+        <div class="feature-card">
+          <span class="ficon">📍</span>
+          <h3 data-i18n="feat.c6.title">Könnyen megközelíthető</h3>
+          <p data-i18n="feat.c6.text">Topoľníky / Nyárasd főutcáján található, jól látható helyen, parkolási lehetőséggel a közelben.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOURS -->
+  <section class="hours-section">
+    <div class="wrap">
+      <div class="hours-wrap">
+        <div>
+          <div class="eyebrow" data-i18n="hours.eyebrow">Nyitvatartás</div>
+          <h2 class="section-title" data-i18n="hours.title">Mikor várunk szeretettel</h2>
+          <p class="hours-note" data-i18n="hours.note">Az alábbiakban a pontos nyitvatartásunkat tüntetjük fel.</p>
+          <div class="callout-box">
+            📞 <span data-i18n="hours.callout">Kérdése van? Hívjon: 031 558 27 50</span>
+          </div>
+        </div>
+        <div class="hours-card">
+          <div class="known">
+            <span class="day" data-i18n="hours.weekdays">Hétfő – Péntek</span>
+            <span class="val open mono">5:30 – 20:00</span>
+          </div>
+          <div class="known">
+            <span class="day" data-i18n="hours.sat">Szombat</span>
+            <span class="val open mono">6:00 – 12:00, 14:00 – 18:00</span>
+          </div>
+          <div class="known">
+            <span class="day" data-i18n="hours.sun">Vasárnap</span>
+            <span class="val open mono">8:00 – 12:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews" id="reviews">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="rev.eyebrow">Vélemények</div>
+      <h2 class="section-title" data-i18n="rev.title">Amit a vásárlóink mondanak</h2>
+      <div class="reviews-grid">
+        <div class="review-note">
+          <div class="tape"></div>
+          <div class="review-stars">★★★★★</div>
+          <p data-i18n="rev.r1.text">„A gluténmentes, laktózmentes és mindenmentes termékek széles választéka miatt járok ide — elérhető áron. A tulajdonosok és az eladók kedvesek és segítőkészek.”</p>
+          <div class="review-author">Curls Sinister</div>
+          <div class="review-meta mono" data-i18n="rev.r1.meta">Helyi idegenvezető · 18 vélemény</div>
+        </div>
+        <div class="review-note">
+          <div class="tape"></div>
+          <div class="review-stars">★★★★★</div>
+          <p data-i18n="rev.r2.text">„Mert a hami nyami, és az elárusítók is kedvesek.”</p>
+          <div class="review-author">Szutyanyi Erik</div>
+          <div class="review-meta mono" data-i18n="rev.r2.meta">4 vélemény</div>
+        </div>
+        <div class="review-note">
+          <div class="tape"></div>
+          <div class="review-stars">★★★★★</div>
+          <p data-i18n="rev.r3.text">„Sok minden fér el kis helyen. Igyekeznek mindenkinek a kedvére tenni.”</p>
+          <div class="review-author">József Tóth</div>
+          <div class="review-meta mono" data-i18n="rev.r3.meta">12 vélemény</div>
+        </div>
+      </div>
+      <p class="reviews-source" data-i18n="rev.source">Forrás: Google-vélemények, 4,5/5 — 89 értékelés alapján.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="eyebrow" data-i18n="contact.eyebrow">Elérhetőség</div>
+      <h2 class="section-title" data-i18n="contact.title">Látogasson el hozzánk</h2>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-row">
+            <span class="cicon">📍</span>
+            <div>
+              <strong data-i18n="contact.addr.label">Cím</strong>
+              <span>Hlavná 107, 930 11 Topoľníky</span>
+            </div>
+          </div>
+          <div class="contact-row">
+            <span class="cicon">📞</span>
+            <div>
+              <strong data-i18n="contact.phone.label">Telefon</strong>
+              <a href="tel:+421315582750">031 558 27 50</a>
+            </div>
+          </div>
+          <div class="contact-row">
+            <span class="cicon">🧭</span>
+            <div>
+              <strong data-i18n="contact.plus.label">Plus code</strong>
+              <span class="mono">XQ9P+W5 Nyárasd</span>
+            </div>
+          </div>
+          <div class="contact-row">
+            <span class="cicon">🛍️</span>
+            <div>
+              <strong data-i18n="contact.type.label">Kategória</strong>
+              <span data-i18n="contact.type.value">Élelmiszerüzlet</span>
+            </div>
+          </div>
+          <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:10px;" href="https://www.google.com/maps/dir/?api=1&destination=Hlavn%C3%A1+107,+930+11+Topo%C4%BEn%C3%ADky" target="_blank" rel="noopener">
+            🧭 <span data-i18n="hero.cta1">Útvonalterv</span>
+          </a>
+        </div>
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps?q=Potraviny+Hami,+Hlavn%C3%A1+107,+930+11+Topo%C4%BEn%C3%ADky&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Potraviny Hami térkép">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div><strong>Potraviny Hami</strong> · Hlavná 107, 930 11 Topoľníky</div>
+    </div>
+  </footer>
+
+<script>
+const translations = {
+  hu: {
+    "top.address": "Hlavná 107, 930 11 Topoľníky",
+    "hero.status": "Nyitás hétfőnként 5:30-tól",
+    "hero.sub": "Kis üzlet, nagy választék — gluténmentes, laktózmentes és mindenmentes termékek Nyárasd szívében.",
+    "hero.reviewcount": "89 Google-vélemény alapján",
+    "hero.cta1": "Útvonalterv",
+    "hero.cta2": "Hívás most",
+    "tag.women": "Női tulajdonban",
+    "tag.lgbt": "LGBTQ+-barát",
+    "tag.gf": "Gluténmentes termékek",
+    "tag.lf": "Laktózmentes termékek",
+    "about.eyebrow": "Rólunk",
+    "about.title": "A hami nyami itt kezdődik",
+    "about.p1": "A Potraviny Hami egy családias, női tulajdonban lévő élelmiszerüzlet Nyárasd (Topoľníky) központjában. Bár a bolt mérete kicsi, a választéka annál nagyobb: régóta szolgáljuk ki a helyieket és a betérő vásárlókat egyaránt.",
+    "about.p2": "Különösen büszkék vagyunk a gluténmentes, laktózmentes és egyéb speciális étrendhez való termékek széles, elérhető áron kínált kínálatára — vásárlóink szerint ezért érdemes idejönni, még akkor is, ha messzebb laknak.",
+    "about.p3": "Az eladóink kedvessége és segítőkészsége visszatérő téma a véleményekben: nálunk mindenki megtalálja, amire szüksége van, barátságos kiszolgálás mellett.",
+    "feat.eyebrow": "Miért minket válasszon",
+    "feat.title": "Kis hely, sok minden",
+    "feat.c1.title": "Speciális étrend, széles választék",
+    "feat.c1.text": "Gluténmentes, laktózmentes és egyéb mindenmentes termékek elérhető áron — sokan emiatt választanak minket.",
+    "feat.c2.title": "Elérhető árak",
+    "feat.c2.text": "A speciális termékek gyakran drágák — nálunk igyekszünk ezt méltányos árazással kompenzálni.",
+    "feat.c3.title": "Kedves, segítőkész kiszolgálás",
+    "feat.c3.text": "Vásárlóink újra és újra kiemelik, hogy az eladók barátságosak és mindenben segítenek.",
+    "feat.c4.title": "Nagy kínálat kis alapterületen",
+    "feat.c4.text": "Meglepően sokféle termék fér el nálunk — érdemes körülnézni, mielőtt máshova mennénk.",
+    "feat.c5.title": "Nyitott, befogadó légkör",
+    "feat.c5.text": "Üzletünk LGBTQ+-barátként van megjelölve, és női tulajdonban működik.",
+    "feat.c6.title": "Könnyen megközelíthető",
+    "feat.c6.text": "Topoľníky / Nyárasd főutcáján található, jól látható helyen, parkolási lehetőséggel a közelben.",
+    "hours.eyebrow": "Nyitvatartás",
+    "hours.title": "Mikor várunk szeretettel",
+    "hours.note": "Az alábbiakban a pontos nyitvatartásunkat tüntetjük fel.",
+    "hours.callout": "Kérdése van? Hívjon: 031 558 27 50",
+    "hours.weekdays": "Hétfő – Péntek", "hours.sat": "Szombat", "hours.sun": "Vasárnap",
+    "rev.eyebrow": "Vélemények",
+    "rev.title": "Amit a vásárlóink mondanak",
+    "rev.r1.text": "„A gluténmentes, laktózmentes és mindenmentes termékek széles választéka miatt járok ide — elérhető áron. A tulajdonosok és az eladók kedvesek és segítőkészek.”",
+    "rev.r1.meta": "Helyi idegenvezető · 18 vélemény",
+    "rev.r2.text": "„Mert a hami nyami, és az elárusítók is kedvesek.”",
+    "rev.r2.meta": "4 vélemény",
+    "rev.r3.text": "„Sok minden fér el kis helyen. Igyekeznek mindenkinek a kedvére tenni.”",
+    "rev.r3.meta": "12 vélemény",
+    "rev.source": "Forrás: Google-vélemények, 4,5/5 — 89 értékelés alapján.",
+    "contact.eyebrow": "Elérhetőség",
+    "contact.title": "Látogasson el hozzánk",
+    "contact.addr.label": "Cím",
+    "contact.phone.label": "Telefon",
+    "contact.plus.label": "Plus code",
+    "contact.type.label": "Kategória",
+    "contact.type.value": "Élelmiszerüzlet",
+    "footer.note": "Az adatok forrása: Google Térkép, saját bevitel alapján. © 2026"
+  },
+  sk: {
+    "top.address": "Hlavná 107, 930 11 Topoľníky",
+    "hero.status": "Otvárame v pondelok od 5:30",
+    "hero.sub": "Malá predajňa, veľký výber — bezlepkové, bezlaktózové a alergén-šetrné potraviny v srdci Topoľník.",
+    "hero.reviewcount": "na základe 89 Google recenzií",
+    "hero.cta1": "Naplánovať trasu",
+    "hero.cta2": "Zavolať teraz",
+    "tag.women": "Vo vlastníctve ženy",
+    "tag.lgbt": "LGBTQ+ priateľské",
+    "tag.gf": "Bezlepkové potraviny",
+    "tag.lf": "Bezlaktózové potraviny",
+    "about.eyebrow": "O nás",
+    "about.title": "Chuť domova na dosah",
+    "about.p1": "Potraviny Hami sú rodinná predajňa vo vlastníctve ženy, v centre obce Topoľníky. Priestor je síce malý, no výber tovaru o to väčší — už dlhé roky obsluhujeme miestnych aj náhodných zákazníkov.",
+    "about.p2": "Sme obzvlášť hrdí na široký výber bezlepkových, bezlaktózových a iných špeciálnych diétnych potravín za prijateľné ceny — podľa našich zákazníkov je to hlavný dôvod, prečo sem chodia, aj keď bývajú ďalej.",
+    "about.p3": "Milé a ochotné predavačky sú téma, ktorá sa v recenziách opakuje: u nás si každý nájde to svoje, s priateľským prístupom.",
+    "feat.eyebrow": "Prečo si vybrať nás",
+    "feat.title": "Malý priestor, veľký výber",
+    "feat.c1.title": "Špeciálne diéty, široký výber",
+    "feat.c1.text": "Bezlepkové, bezlaktózové a iné alergén-šetrné potraviny za prijateľné ceny — mnohí si nás vyberajú práve preto.",
+    "feat.c2.title": "Prijateľné ceny",
+    "feat.c2.text": "Špeciálne potraviny bývajú drahšie — u nás sa snažíme túto skutočnosť vyvážiť férovým cenami.",
+    "feat.c3.title": "Milá a ochotná obsluha",
+    "feat.c3.text": "Naši zákazníci opakovane oceňujú, že personál je priateľský a vždy ochotný pomôcť.",
+    "feat.c4.title": "Veľký výber na malej ploche",
+    "feat.c4.text": "Napriek malému priestoru u nás nájdete prekvapivo pestrý sortiment — oplatí sa pozrieť skôr, než pôjdete inde.",
+    "feat.c5.title": "Otvorená a priateľská atmosféra",
+    "feat.c5.text": "Naša predajňa je označená ako LGBTQ+ priateľská a funguje vo vlastníctve ženy.",
+    "feat.c6.title": "Ľahko dostupné",
+    "feat.c6.text": "Nachádzame sa na hlavnej ulici Topoľník, na dobre viditeľnom mieste s možnosťou parkovania v okolí.",
+    "hours.eyebrow": "Otváracie hodiny",
+    "hours.title": "Kedy vás radi privítame",
+    "hours.note": "Nižšie uvádzame presnú otváraciu dobu.",
+    "hours.callout": "Máte otázku? Zavolajte: 031 558 27 50",
+    "hours.weekdays": "Pondelok – Piatok", "hours.sat": "Sobota", "hours.sun": "Nedeľa",
+    "rev.eyebrow": "Recenzie",
+    "rev.title": "Čo hovoria naši zákazníci",
+    "rev.r1.text": "„Chodím sem kvôli širokému výberu bezlepkových, bezlaktózových a iných alergén-šetrných potravín — za dostupné ceny. Majitelia aj predavačky sú milí a ochotní.”",
+    "rev.r1.meta": "Miestny sprievodca · 18 recenzií",
+    "rev.r2.text": "„Lebo je to chutné a predavačky sú tiež milé.”",
+    "rev.r2.meta": "4 recenzie",
+    "rev.r3.text": "„Na malom priestore sa zmestí veľa vecí. Snažia sa vyhovieť každému.”",
+    "rev.r3.meta": "12 recenzií",
+    "rev.source": "Zdroj: Google recenzie, 4,5/5 — na základe 89 hodnotení.",
+    "contact.eyebrow": "Kontakt",
+    "contact.title": "Príďte nás navštíviť",
+    "contact.addr.label": "Adresa",
+    "contact.phone.label": "Telefón",
+    "contact.plus.label": "Plus code",
+    "contact.type.label": "Kategória",
+    "contact.type.value": "Predajňa potravín",
+    "footer.note": "Zdroj údajov: Google Mapy, na základe vlastných podkladov. © 2026"
+  },
+  en: {
+    "top.address": "Hlavná 107, 930 11 Topoľníky",
+    "hero.status": "Opens Monday from 5:30 AM",
+    "hero.sub": "A small shop with a big selection — gluten-free, lactose-free and allergen-friendly groceries in the heart of Topoľníky.",
+    "hero.reviewcount": "based on 89 Google reviews",
+    "hero.cta1": "Get directions",
+    "hero.cta2": "Call now",
+    "tag.women": "Women-owned",
+    "tag.lgbt": "LGBTQ+ friendly",
+    "tag.gf": "Gluten-free products",
+    "tag.lf": "Lactose-free products",
+    "about.eyebrow": "About us",
+    "about.title": "Where good taste starts",
+    "about.p1": "Potraviny Hami is a family-run, women-owned grocery store in the centre of Topoľníky (Nyárasd). The shop itself is small, but the selection is anything but — we've been serving locals and passers-by alike for years.",
+    "about.p2": "We're especially proud of our wide range of gluten-free, lactose-free and other special-diet products at affordable prices — our customers tell us this is exactly why it's worth the trip, even from further away.",
+    "about.p3": "The kindness and helpfulness of our staff is a recurring theme in our reviews: everyone finds what they need here, with friendly service to match.",
+    "feat.eyebrow": "Why shop with us",
+    "feat.title": "Small space, big selection",
+    "feat.c1.title": "Special diets, wide range",
+    "feat.c1.text": "Gluten-free, lactose-free and other allergen-friendly products at affordable prices — a big reason many customers choose us.",
+    "feat.c2.title": "Affordable prices",
+    "feat.c2.text": "Special-diet products are often expensive — we work hard to keep our prices fair.",
+    "feat.c3.title": "Friendly, helpful service",
+    "feat.c3.text": "Customers repeatedly mention how kind and helpful our staff are, always ready to lend a hand.",
+    "feat.c4.title": "A lot packed into a small space",
+    "feat.c4.text": "Despite our compact footprint, we stock a surprisingly wide variety — worth a look before heading elsewhere.",
+    "feat.c5.title": "Open and welcoming",
+    "feat.c5.text": "Our shop is listed as LGBTQ+ friendly and is women-owned.",
+    "feat.c6.title": "Easy to reach",
+    "feat.c6.text": "Located on the main street of Topoľníky / Nyárasd, in a visible spot with nearby parking.",
+    "hours.eyebrow": "Opening hours",
+    "hours.title": "When we're happy to see you",
+    "hours.note": "Below are our exact opening hours.",
+    "hours.callout": "Have a question? Call: 031 558 27 50",
+    "hours.weekdays": "Monday – Friday", "hours.sat": "Saturday", "hours.sun": "Sunday",
+    "rev.eyebrow": "Reviews",
+    "rev.title": "What our customers say",
+    "rev.r1.text": "\"I come here for the wide, affordably priced selection of gluten-free, lactose-free and other allergen-friendly products. The owners and staff are kind and helpful.\"",
+    "rev.r1.meta": "Local Guide · 18 reviews",
+    "rev.r2.text": "\"Because it's delicious, and the staff are lovely too.\"",
+    "rev.r2.meta": "4 reviews",
+    "rev.r3.text": "\"A lot fits into a small space. They try to please everyone.\"",
+    "rev.r3.meta": "12 reviews",
+    "rev.source": "Source: Google reviews, 4.5/5 — based on 89 ratings.",
+    "contact.eyebrow": "Contact",
+    "contact.title": "Come visit us",
+    "contact.addr.label": "Address",
+    "contact.phone.label": "Phone",
+    "contact.plus.label": "Plus code",
+    "contact.type.label": "Category",
+    "contact.type.value": "Grocery store",
+    "footer.note": "Data source: Google Maps, based on our own input. © 2026"
+  }
+};
+
+function setLanguage(lang){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(translations[lang] && translations[lang][key]){
+      el.textContent = translations[lang][key];
+    }
+  });
+  document.querySelectorAll('.langswitch button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  try{ localStorage.setItem('hami-lang', lang); }catch(e){}
+}
+
+document.querySelectorAll('.langswitch button').forEach(btn => {
+  btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+});
+
+let initialLang = 'hu';
+try{
+  const saved = localStorage.getItem('hami-lang');
+  if(saved && translations[saved]) initialLang = saved;
+}catch(e){}
+setLanguage(initialLang);
+</script>
+
+</body>
+</html>
